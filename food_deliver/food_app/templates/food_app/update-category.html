@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Index Page{% endblock title %}
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}    
+    <h3>Update Category</h3>
+    {{form.as_p}}
+    <button class="btn btn-danger">Update</button>
+    <a href="{% url 'category' %}" class="btn btn-info mx-4">Back To categories</a>
+</form>
+{% endblock  %}

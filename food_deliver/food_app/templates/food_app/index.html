@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Index Page{% endblock title %}
+{% block content %}
+    <h2>Home Page</h2>
+    <ul>
+        <li><a href="{% url 'add-category' %}" class="link category">Add a Category</a></li>
+        <li><a href="#" class="link category">Add Ingredienst</a></li>   
+        <li><a href="#" class="link category">Add Extra Ingredienst</a></li>
+    </ul>   
+{% endblock content %}

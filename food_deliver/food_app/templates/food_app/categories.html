@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Index Page{% endblock title %}
+{% block content %}
+    <h2>Categories</h2>
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a href="" class="navbar-brand">Add Category</a>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" name='query' placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <span>
+          <form action="{% url 'category' %}" method="get">
+          <button  class="btn btn-outline-info" name='all' value="all">All</button>
+          <button  class="btn btn-outline-info" name='active' value="active">Active</button>
+          <button  class="btn btn-outline-info" name='inactive' value="inactive">Inactive</button>
+          </form>  
+        </span>
+      </div>
+    </nav>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <form action="{% url 'category' %}" method="get" >
+            <th scope="col"> <input type="checkbox" name="all_category" value="delete" ></th>
+            <th scope="col"><button class="link" name="category_id" value="id">#</button></th>
+            <th scope="col"><button class="link" name="category_name" value ="name">Category Name</button></th>
+            <th scope="col"><button class="link" name="category_fee" value="fee">Packing Fee</button></th>
+            <th scope="col"><button class="link" name="category_status" value="status">Status</th></button>    
+            </form>        
+          </tr>          
+        </thead>
+        <tbody>
+          <form action="{% url 'category' %}" method="get">
+            
+            {% for category in categories %}
+            <tr>
+             
+            <td><input type="checkbox" name="category" id=""value="{{category.id}}" ></td>
+            <th scope="row">{{category.id}}</th>
+            <td>{{category.name}}</td>
+            <td>{{category.packing_fee}}</td>
+            
+            {% if category.status %}
+              <td>Active</td>
+              {% else %}
+              <td>Inactive</td>
+            {% endif %}
+            <td><a href="{% url 'delete-category' category.pk %}" class="link">Delete</a></td>
+            <td><a href="{% url 'update-category' category.pk %}" class="link">Edit</a></td>
+          </tr>          
+        {% endfor %}
+        </tbody>
+</table> 
+ <!-- Delete Multiple Category Button -->
+ <button>Delete</button>
+ <!-- <div class="dropdown">
+  <a class="btn btn-danger dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Choose Action
+  </a>
+  <ul class="dropdown-menu">
+    <li><button class="dropdown-item" type="submit">Delete</button></li>
+  </ul>
+  </div>   -->
+  </form>
+
+<!-- Pagination -->
+{% if page_obj.has_previous %}
+  <a href="?query={{query}}&page=1">First page</a>
+  <a href="?query={{query}}&page={{page_obj.previous_page_number}}">Previous</a>
+{% endif %}
+{% if page_obj.has_next%}
+  <a href="?query={{query}}&page={{page_obj.next_page_number}}" class="me-4">next</a>
+  <a href="?query={{query}}&page={{page_obj.paginator.num_pages}}">last</a>
+{% endif %}
+<div class="my-3">
+  <span class="">Page {{page_obj.number}} of {{paginator.num_pages}}</span>
+</div>
+<a href="{% url 'add-category' %}" class="link"> Add a category</a>
+{% endblock content %}
