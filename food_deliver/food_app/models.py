@@ -1,10 +1,8 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 # Recipee Makers
-
-
 class RecipeeCategory(models.Model):
     name = models.CharField(max_length=50)
     packing_fee = models.DecimalField(decimal_places=3,max_digits=10)
@@ -42,7 +40,6 @@ class Recipee(models.Model):
     status = models.BooleanField(default=True)
     featured_recipy = models.BooleanField()
     price_set_by_size = models.BooleanField()
-    quantaty_to_order = models.IntegerField(default=1)
 
 
     def __str__(self) -> str:

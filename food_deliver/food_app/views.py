@@ -1,6 +1,7 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from .models import RecipeeCategory,Ingredients,ExtraIngredients
 from django.views.generic import (
@@ -24,21 +25,30 @@ class MakeCategory(CreateView):
     fields ="__all__"
     template_name = 'food_app/add-category.html'
     success_url =reverse_lazy('category')
+
+    
     
 
 class AllCategory(ListView):
     model = RecipeeCategory
     template_name ='food_app/categories.html'
     context_object_name ='categories' 
-    paginate_by = 5
+    paginate_by = 10
     
 
     def get_context_data(self, **kwargs):        
         query = self.request.GET.get('query')
+        all_category = self.request.GET.get('all')
+        active = self.request.GET.get('active')
+        inactive = self.request.GET.get('inactive')
         context = super().get_context_data(**kwargs)
         context["query"] =query
+        context["all"] =all_category
+        context["active"] =active
+        context["inactive"] =inactive
         return context
 
+    
     def get_queryset(self) -> QuerySet[Any]:
         data =  super().get_queryset()
         query = self.request.GET.get('query')
@@ -47,38 +57,52 @@ class AllCategory(ListView):
         inactive = self.request.GET.get('inactive')
         category_name= self.request.GET.get('category_name')
         category_fee = self.request.GET.get('category_fee')
-        category_id = self.request.GET.get('category_id')
-        delete_category = self.request.GET.getlist('category')
-        delete_all_category = self.request.GET.get('all_category')
+        category_status = self.request.GET.get('category_status')
+        delete_all_category = self.request.POST.get('all_category')
+        
         if query:
             data = RecipeeCategory.objects.filter(
                 name__contains = query
-            )
-        if all_category:
-                data = RecipeeCategory.objects.all()
+            )        
         
-        if active:
+        elif active:
             data = RecipeeCategory.objects.filter(status = True)
 
-        if inactive:
+        elif inactive:
             data = RecipeeCategory.objects.filter(status = False)    
     
-        if category_name:
+        elif all_category:
+            data = RecipeeCategory.objects.all()
+
+        elif category_name:
             data  = data.order_by('name')
 
-        if category_fee:
+        elif category_fee:
             data = data.order_by('packing_fee')  
         
-        if category_id:
-            data = data.order_by('id')      
-            return data  
+        elif category_status:
+            data = data.order_by('status')     
+        
+        else:
+            data = data.order_by('id')
 
-        if delete_category:
-           data = RecipeeCategory.objects.filter(id__in=delete_category).delete()
-
+           
+        
         if delete_all_category:
             data = RecipeeCategory.objects.all().delete()
+        
         return data
+    
+    def post(self, request,*args,**kwargs) -> HttpResponse:
+        delete_category = self.request.POST.getlist('category')
+        if delete_category:
+           data = RecipeeCategory.objects.filter(id__in=delete_category).delete()
+        return HttpResponseRedirect(reverse_lazy('category'))  
+
+        
+       
+    
+        
     
 
 

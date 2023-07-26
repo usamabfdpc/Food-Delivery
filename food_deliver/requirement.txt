@@ -2,3 +2,4 @@ Django==4.2.3
 Pillow==10.0.0
 Bootstrap==5.2.3
 django-widget-tweaks==1.4.12
+django_phone_field==1.8.1

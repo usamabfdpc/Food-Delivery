@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'food_app',
     'widget_tweaks',
+    'phone_field',
+    
+
 ]
 
 MIDDLEWARE = [

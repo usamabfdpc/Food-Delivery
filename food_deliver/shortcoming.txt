@@ -1,0 +1,15 @@
+<-------- categories------------>
+1)It is good that searched words in category search not disapear
+2) The sr#,Category Name ,Packing Fee Status should look like simple link
+      *** Use link classes with anchor tag not button tag ***
+3)when we click on sort by category name it sort in ascending order but if i again click on it,it should come into descending order.
+    I think This is due to get manager_method which changes its url.
+      *** Expected Problem Solution Use method="POST" in Form ***
+4) when we click on Active then it give all objects which are active but when we click on sorting buttons category name etc it remove all
+    filters based  data and show all objects with sorting
+
+    *** Expected Problem Solution Use method="POST" in Form ***
+5)✅  When we click on all delete radio button all other radio buttons selected
+      but when we trying to uncheck all delete this not yet working
+      """" Solved  by just adding another if  if(selectAllBtn.checked==false){}"""
+      
