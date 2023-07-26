@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-veyikmb)pl+fw3=!(cy!i5=o3vhc4h&4kem(1+633tx9f&&*)p
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'users.Users'
 
 
 
@@ -39,11 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'food_app',
+    'users',    
     'widget_tweaks',
     'phone_field',
-    
-
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -17,7 +17,7 @@ from django.views.generic import (
 # Create your views here.
 
 class IndexView(TemplateView):
-    template_name ='food_app/index.html'
+    template_name ='food_app/quick-link.html'
 
 
 class MakeCategory(CreateView):
